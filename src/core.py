@@ -1,9 +1,10 @@
 import random
+from collections.abc import Iterator
 from copy import deepcopy
+from itertools import chain
 
 from src.models import Coordinate, Orientation, Package, Placement, Problem, State
 
-# Return a package's dimensions after applying an orientation.
 def oriented_dimensions(
     package: Package,
     orientation: Orientation,
@@ -28,7 +29,6 @@ def oriented_dimensions(
     raise ValueError(f"Unknown orientation: {orientation}")
 
 
-# Calculate the total value of packages loaded in the truck.
 def objective(problem: Problem, state: State) -> float:
     return sum(
         problem.packages[placement.package_id].value
@@ -37,7 +37,6 @@ def objective(problem: Problem, state: State) -> float:
     )
 
 
-# Calculate the total weight of packages loaded in the truck.
 def total_weight(problem: Problem, state: State) -> float:
     return sum(
         problem.packages[placement.package_id].weight
@@ -46,8 +45,10 @@ def total_weight(problem: Problem, state: State) -> float:
     )
 
 
-# Check whether a state satisfies every problem constraint.
 def is_valid(problem: Problem, state: State) -> bool:
+    if not _is_well_formed(problem, state):
+        return False
+
     return all(
         _is_inside_truck(problem, placement)
         for placement in state.placements.values()
@@ -58,7 +59,25 @@ def is_valid(problem: Problem, state: State) -> bool:
     )
 
 
-# Build one valid random starting state for a search run.
+def _is_well_formed(problem: Problem, state: State) -> bool:
+    if set(state.placements) != set(problem.packages):
+        return False
+
+    for package_id, placement in state.placements.items():
+        if not isinstance(placement, Placement):
+            return False
+        if placement.package_id != package_id:
+            return False
+        if not isinstance(placement.orientation, Orientation):
+            return False
+        if placement.position is not None and not isinstance(
+            placement.position, Coordinate
+        ):
+            return False
+
+    return True
+
+
 def random_initial_state(problem: Problem, rng: random.Random) -> State:
     placements = {
         package_id: Placement(package_id, None, Orientation.XYZ)
@@ -97,7 +116,6 @@ def random_initial_state(problem: Problem, rng: random.Random) -> State:
     return State(placements)
 
 
-# Try to create a valid neighbor or return None when no attempt succeeds.
 def generate_valid_neighbor(
     problem: Problem,
     state: State,
@@ -120,10 +138,103 @@ def generate_valid_neighbor(
         else:
             candidate = _swap_neighbor(state, rng)
 
-        if is_valid(problem, candidate):
+        if (
+            _state_key(candidate) != _state_key(state)
+            and is_valid(problem, candidate)
+        ):
             return candidate
 
     return None
+
+
+def generate_valid_neighbors(problem: Problem, state: State) -> Iterator[State]:
+    if not is_valid(problem, state):
+        raise ValueError("Cannot generate neighbors from an invalid state")
+
+    seen = {_state_key(state)}
+
+    for package_id, placement in state.placements.items():
+        package = problem.packages[package_id]
+        width, length, height = oriented_dimensions(package, placement.orientation)
+        truck = problem.truck
+
+        if width <= truck.width and length <= truck.length and height <= truck.height:
+            positions = chain(
+                (None,),
+                (
+                    Coordinate(x, y, z)
+                    for x in range(truck.width - width + 1)
+                    for y in range(truck.length - length + 1)
+                    for z in range(truck.height - height + 1)
+                ),
+            )
+        else:
+            positions = iter([None])
+
+        for position in positions:
+            if position == placement.position:
+                continue
+            candidate = deepcopy(state)
+            candidate.placements[package_id].position = position
+            if _is_new_valid_neighbor(problem, candidate, seen):
+                yield candidate
+
+        rotated_orientations = []
+        for axis in ("x", "y", "z"):
+            orientation = _rotate_orientation(placement.orientation, axis)
+            if orientation not in rotated_orientations:
+                rotated_orientations.append(orientation)
+
+        for orientation in rotated_orientations:
+            if orientation == placement.orientation:
+                continue
+            candidate = deepcopy(state)
+            candidate.placements[package_id].orientation = orientation
+            if _is_new_valid_neighbor(problem, candidate, seen):
+                yield candidate
+
+    package_ids = list(state.placements)
+    for first_index, first_id in enumerate(package_ids):
+        for second_id in package_ids[first_index + 1 :]:
+            first_position = state.placements[first_id].position
+            second_position = state.placements[second_id].position
+            if first_position == second_position:
+                continue
+
+            candidate = deepcopy(state)
+            candidate.placements[first_id].position = second_position
+            candidate.placements[second_id].position = first_position
+            if _is_new_valid_neighbor(problem, candidate, seen):
+                yield candidate
+
+
+def _is_new_valid_neighbor(
+    problem: Problem,
+    candidate: State,
+    seen: set[tuple],
+) -> bool:
+    key = _state_key(candidate)
+    if key in seen or not is_valid(problem, candidate):
+        return False
+    seen.add(key)
+    return True
+
+
+def _state_key(state: State) -> tuple:
+    return tuple(
+        (
+            package_id,
+            None
+            if placement.position is None
+            else (
+                placement.position.x,
+                placement.position.y,
+                placement.position.z,
+            ),
+            placement.orientation.value,
+        )
+        for package_id, placement in sorted(state.placements.items())
+    )
 
 
 def _is_inside_truck(problem: Problem, placement: Placement) -> bool:
@@ -221,6 +332,7 @@ def _has_support(problem: Problem, state: State, target: Placement) -> bool:
     if target_position.z == 0:
         return True
 
+    has_non_fragile_support = False
     for supporter in state.placements.values():
         if supporter.package_id == target.package_id or supporter.position is None:
             continue
@@ -232,12 +344,14 @@ def _has_support(problem: Problem, state: State, target: Placement) -> bool:
 
         if supporter.position.z + supporter_height != target_position.z:
             continue
-        if supporter_package.is_fragile:
+        if not _overlaps_xy(problem, supporter, target):
             continue
-        if _overlaps_xy(problem, supporter, target):
-            return True
 
-    return False
+        if supporter_package.is_fragile:
+            return False
+        has_non_fragile_support = True
+
+    return has_non_fragile_support
 
 
 def _all_packages_supported(problem: Problem, state: State) -> bool:
@@ -304,6 +418,5 @@ def _swap_neighbor(state: State, rng: random.Random) -> State:
     second = candidate.placements[second_id]
 
     first.position, second.position = second.position, first.position
-    first.orientation, second.orientation = second.orientation, first.orientation
     return candidate
 
