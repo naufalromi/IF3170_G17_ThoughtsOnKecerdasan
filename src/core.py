@@ -419,4 +419,3 @@ def _swap_neighbor(state: State, rng: random.Random) -> State:
 
     first.position, second.position = second.position, first.position
     return candidate
-
