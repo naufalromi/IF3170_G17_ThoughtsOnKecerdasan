@@ -221,6 +221,7 @@ def _has_support(problem: Problem, state: State, target: Placement) -> bool:
     if target_position.z == 0:
         return True
 
+    has_non_fragile_support = False
     for supporter in state.placements.values():
         if supporter.package_id == target.package_id or supporter.position is None:
             continue
@@ -232,12 +233,13 @@ def _has_support(problem: Problem, state: State, target: Placement) -> bool:
 
         if supporter.position.z + supporter_height != target_position.z:
             continue
-        if supporter_package.is_fragile:
+        if not _overlaps_xy(problem, supporter, target):
             continue
-        if _overlaps_xy(problem, supporter, target):
-            return True
+        if supporter_package.is_fragile:
+            return False
+        has_non_fragile_support = True
 
-    return False
+    return has_non_fragile_support
 
 
 def _all_packages_supported(problem: Problem, state: State) -> bool:
@@ -306,4 +308,3 @@ def _swap_neighbor(state: State, rng: random.Random) -> State:
     first.position, second.position = second.position, first.position
     first.orientation, second.orientation = second.orientation, first.orientation
     return candidate
-
