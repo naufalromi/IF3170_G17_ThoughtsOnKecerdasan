@@ -35,14 +35,14 @@ class _RunResultAnnealing:
     stuck_count: int = 0
 
 def _to_result(
-    variant: str,
+    problem: Problem,
     run: _RunResultAnnealing,
     duration: float,
 ) -> SimulatedAnnealingResults:
     return SimulatedAnnealingResults(
         initial_state=run.initial_state,
         final_state=run.final_state,
-        final_value=run.history[-1],
+        final_value=objective(problem, run.final_state),
         objective_history=run.history,
         iterations=run.iterations,
         duration_seconds=duration,
@@ -133,7 +133,7 @@ def simulated_annealing(
         acceptance_probabilities=tuple(acceptance_history),
         stuck_count=stuck_count,
     )
-    return _to_result("simulated_annealing", run, duration)
+    return _to_result(problem, run, duration)
 
 
 def _estimate_initial_temperature(problem, state, rng, samples=50, accept_prob=0.8):
