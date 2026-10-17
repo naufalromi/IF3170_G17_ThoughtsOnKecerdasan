@@ -4,10 +4,9 @@ import random
 import math
 from copy import deepcopy
 from dataclasses import dataclass
-from math import isclose
 from time import perf_counter
 
-from src.core import generate_valid_neighbor, is_valid, objective, random_initial_state
+from src.core import generate_valid_neighbor, objective
 from src.hill_climbing import _prepare_initial_state
 from src.models import Problem, State
 
@@ -18,10 +17,12 @@ class SimulatedAnnealingResults:
     final_state: State
     final_value: float
     objective_history: tuple[float, ...]
+    best_objective_history: tuple[float, ...]
     iterations: int
     duration_seconds: float
     termination_reason: str
-    acceptance_probabilites: tuple[float, ...] = ()
+    acceptance_probabilities: tuple[float, ...] = ()
+    temperature_history: tuple[float, ...] = ()
     stuck_count: int = 0
 
 @dataclass(frozen=True)
@@ -29,26 +30,29 @@ class _RunResultAnnealing:
     initial_state: State
     final_state: State
     history: tuple[float, ...]
+    best_history: tuple[float, ...]
     iterations: int
     termination_reason: str
     acceptance_probabilities: tuple[float, ...] = ()
+    temperature_history: tuple[float, ...] = ()
     stuck_count: int = 0
 
 def _to_result(
-    variant: str,
     run: _RunResultAnnealing,
     duration: float,
 ) -> SimulatedAnnealingResults:
     return SimulatedAnnealingResults(
         initial_state=run.initial_state,
         final_state=run.final_state,
-        final_value=run.history[-1],
+        final_value=run.best_history[-1],
         objective_history=run.history,
+        best_objective_history=run.best_history,
         iterations=run.iterations,
         duration_seconds=duration,
         termination_reason=run.termination_reason,
-        acceptance_probabilites=run.acceptance_probabilities,
-        stuck_count=run.stuck_count
+        acceptance_probabilities=run.acceptance_probabilities,
+        temperature_history=run.temperature_history,
+        stuck_count=run.stuck_count,
     )
 
 
@@ -66,6 +70,8 @@ def simulated_annealing(
         raise ValueError("cooling_rate must be between 0 and 1 (exclusive)")
     if min_temperature <= 0:
         raise ValueError("min_temperature must be positive")
+    if type(max_iterations) is not int or max_iterations < 0:
+        raise ValueError("max_iterations must be a non-negative integer")
 
     generator = rng or random.Random()
     start_state = _prepare_initial_state(problem, initial_state, generator)
@@ -83,9 +89,10 @@ def simulated_annealing(
     best, best_value = deepcopy(current), current_value
 
     history = [current_value]
+    best_history = [best_value]
     acceptance_history: list[float] = []
+    temperature_history: list[float] = []
     stuck_count = 0
-    no_neighbor_count = 0
 
     temperature = initial_temperature
     iterations = 0
@@ -98,21 +105,23 @@ def simulated_annealing(
         iterations += 1
 
         neighbor = generate_valid_neighbor(problem, current, generator)
-        probability = 1.0
+        temperature_history.append(temperature)
+        probability = 0.0
 
         if neighbor is None:
-            no_neighbor_count += 1
+            stuck_count += 1
         else:
             neighbor_value = objective(problem, neighbor)
             delta = neighbor_value - current_value
 
             if delta >= 0:
+                probability = 1.0
                 accepted = True
             else:
                 probability = math.exp(delta / temperature)
                 accepted = generator.random() < probability
                 if not accepted:
-                    stuck_count += 1  # worsening move rejected -> stayed put
+                    stuck_count += 1
 
             if accepted:
                 current, current_value = neighbor, neighbor_value
@@ -121,19 +130,22 @@ def simulated_annealing(
 
         acceptance_history.append(probability)
         history.append(current_value)
+        best_history.append(best_value)
         temperature *= cooling_rate
 
     duration = perf_counter() - started_at
     run = _RunResultAnnealing(
         deepcopy(start_state),
-        best,
+        deepcopy(best),
         tuple(history),
+        tuple(best_history),
         iterations,
         termination_reason,
         acceptance_probabilities=tuple(acceptance_history),
+        temperature_history=tuple(temperature_history),
         stuck_count=stuck_count,
     )
-    return _to_result("simulated_annealing", run, duration)
+    return _to_result(run, duration)
 
 
 def _estimate_initial_temperature(problem, state, rng, samples=50, accept_prob=0.8):
