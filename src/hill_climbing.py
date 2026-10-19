@@ -6,7 +6,13 @@ from dataclasses import dataclass
 from math import isclose
 from time import perf_counter
 
-from src.core import generate_valid_neighbors, is_valid, objective, random_initial_state
+from src.core import (
+    generate_valid_neighbor,
+    generate_valid_neighbors,
+    is_valid,
+    objective,
+    random_initial_state,
+)
 from src.models import Problem, State
 
 
@@ -73,24 +79,13 @@ def stochastic_hill_climbing(
     termination_reason = "max_iterations"
 
     while iterations < max_iterations:
-        selected = None
-        improving_count = 0
-
-        for neighbor in generate_valid_neighbors(problem, current):
+        neighbor = generate_valid_neighbor(problem, current, generator)
+        if neighbor is not None:
             neighbor_value = objective(problem, neighbor)
-            if not _is_greater(neighbor_value, current_value):
-                continue
+            if _is_greater(neighbor_value, current_value):
+                current = neighbor
+                current_value = neighbor_value
 
-            improving_count += 1
-            if generator.randrange(improving_count) == 0:
-                selected = neighbor
-
-        if selected is None:
-            termination_reason = "local_optimum"
-            break
-
-        current = selected
-        current_value = objective(problem, current)
         history.append(current_value)
         iterations += 1
 
