@@ -51,7 +51,7 @@ def get_algorithm_parameters(algorithm: str) -> tuple[str, ...]:
         "sa": (
             "max_iterations", "initial_temperature", "min_temperature", "cooling_rate"
         ),
-        "ga": ("max_iterations", "population_size", "mutation_rate"),
+        "ga": ("max_iterations", "population_size"),
     }
     return configurations[get_algorithm_code(algorithm)]
 
@@ -66,7 +66,6 @@ def get_parameter_label(name: str) -> str:
         "min_temperature": "Suhu minimum",
         "cooling_rate": "Cooling rate",
         "population_size": "Jumlah populasi",
-        "mutation_rate": "Mutation rate",
     }
     try:
         return labels[name]
@@ -84,7 +83,6 @@ def get_parameter_defaults() -> dict[str, str]:
         "min_temperature": "0.01",
         "cooling_rate": "0.95",
         "population_size": "20",
-        "mutation_rate": "0.1",
     }
 
 
@@ -153,7 +151,7 @@ def build_problem(truck_data: dict, package_rows: list[dict]) -> Problem:
 def parse_parameters(algorithm: str, values: dict[str, str]) -> dict:
     parameters = {}
     float_parameters = {
-        "initial_temperature", "min_temperature", "cooling_rate", "mutation_rate"
+        "initial_temperature", "min_temperature", "cooling_rate"
     }
     for name in get_algorithm_parameters(algorithm):
         label = get_parameter_label(name)

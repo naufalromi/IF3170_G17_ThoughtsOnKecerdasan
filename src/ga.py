@@ -25,15 +25,12 @@ def genetic_algorithm(
     *,
     population_size: int = 20,
     max_iterations: int = 100,
-    mutation_rate: float = 0.1,
     rng: random.Random | None = None,
 ) -> GeneticAlgorithmResult:
     if type(population_size) is not int or population_size < 1:
         raise ValueError("population_size must be a positive integer")
     if type(max_iterations) is not int or max_iterations < 0:
         raise ValueError("max_iterations must be a non-negative integer")
-    if not isinstance(mutation_rate, (int, float)) or not 0 <= mutation_rate <= 1:
-        raise ValueError("mutation_rate must be between 0 and 1")
     if any(
         not isfinite(package.value) or package.value < 0
         for package in problem.packages.values()
@@ -44,12 +41,14 @@ def genetic_algorithm(
 
     generator = rng if rng is not None else random.Random()
     started_at = perf_counter()
+    mutation_rate = generator.random()
     package_ids = tuple(sorted(problem.packages))
     population = [random_initial_state(problem, generator) for _ in range(population_size)]
     fitness = [objective(problem, state) for state in population]
     initial_state = deepcopy(population[max(range(population_size), key=fitness.__getitem__)])
     maxima = [max(fitness)]
     means = [sum(value / population_size for value in fitness)]
+    
     for _ in range(max_iterations):
         highest = max(fitness)
         weights = [value / highest for value in fitness] if highest > 0 else None
