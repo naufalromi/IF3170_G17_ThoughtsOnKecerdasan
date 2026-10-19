@@ -1,9 +1,9 @@
 {
   "truck": {
-    "width": 3,
-    "length": 4,
-    "height": 2,
-    "max_capacity": 40
+    "width": 4,
+    "length": 5,
+    "height": 3,
+    "max_capacity": 100
   },
   "packages": [
     {
@@ -64,6 +64,66 @@
       "value": 28,
       "weight": 2,
       "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "G",
+      "width": 3,
+      "length": 3,
+      "height": 2,
+      "value": 125,
+      "weight": 12,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "H",
+      "width": 2,
+      "length": 4,
+      "height": 1,
+      "value": 80,
+      "weight": 8,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "I",
+      "width": 1,
+      "length": 4,
+      "height": 2,
+      "value": 68,
+      "weight": 6,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "J",
+      "width": 2,
+      "length": 2,
+      "height": 2,
+      "value": 95,
+      "weight": 9,
+      "is_fragile": true,
+      "eta": 2
+    },
+    {
+      "id": "K",
+      "width": 3,
+      "length": 2,
+      "height": 1,
+      "value": 55,
+      "weight": 5,
+      "is_fragile": false,
+      "eta": 4
+    },
+    {
+      "id": "L",
+      "width": 1,
+      "length": 2,
+      "height": 3,
+      "value": 49,
+      "weight": 4,
+      "is_fragile": false,
       "eta": 1
     }
   ]
