@@ -44,7 +44,7 @@ def get_algorithm_code(algorithm: str) -> str:
 
 def get_algorithm_parameters(algorithm: str) -> tuple[str, ...]:
     configurations = {
-        "steepest": ("max_iterations",),
+        "steepest": (),
         "stochastic": ("max_iterations",),
         "sideways": ("max_iterations", "max_sideways_moves"),
         "random_restart": ("max_iterations_per_restart", "max_restarts"),

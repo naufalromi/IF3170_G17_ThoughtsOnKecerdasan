@@ -46,15 +46,13 @@ def steepest_ascent_hill_climbing(
     problem: Problem,
     initial_state: State | None = None,
     *,
-    max_iterations: int = 1_000,
     rng: random.Random | None = None,
 ) -> HillClimbingResult:
-    _validate_maximum("max_iterations", max_iterations)
     generator = rng or random.Random()
     start_state = _prepare_initial_state(problem, initial_state, generator)
 
     started_at = perf_counter()
-    run = _steepest_run(problem, start_state, max_iterations, generator)
+    run = _steepest_run(problem, start_state, None, generator)
     duration = perf_counter() - started_at
 
     return _to_result("steepest_ascent", run, duration)
@@ -224,16 +222,18 @@ def random_restart_hill_climbing(
 def _steepest_run(
     problem: Problem,
     initial_state: State,
-    max_iterations: int,
+    max_iterations: int | None,
     rng: random.Random,
 ) -> _RunResult:
     current = deepcopy(initial_state)
     current_value = objective(problem, current)
     history = [current_value]
     iterations = 0
-    termination_reason = "max_iterations"
+    termination_reason = (
+        "local_optimum" if max_iterations is None else "max_iterations"
+    )
 
-    while iterations < max_iterations:
+    while max_iterations is None or iterations < max_iterations:
         neighbor, neighbor_value = _best_neighbor(
             problem, current, current_value, rng, allow_equal=False
         )
