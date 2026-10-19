@@ -103,11 +103,9 @@ def sideways_hill_climbing(
     initial_state: State | None = None,
     *,
     max_sideways_moves: int,
-    max_iterations: int = 1_000,
     rng: random.Random | None = None,
 ) -> HillClimbingResult:
     _validate_maximum("max_sideways_moves", max_sideways_moves)
-    _validate_maximum("max_iterations", max_iterations)
     generator = rng or random.Random()
     start_state = _prepare_initial_state(problem, initial_state, generator)
 
@@ -118,9 +116,9 @@ def sideways_hill_climbing(
     iterations = 0
     consecutive_sideways = 0
     total_sideways = 0
-    termination_reason = "max_iterations"
+    termination_reason = "local_optimum"
 
-    while iterations < max_iterations:
+    while True:
         neighbor, neighbor_value = _best_neighbor(
             problem, current, current_value, generator, allow_equal=True
         )
@@ -159,11 +157,9 @@ def random_restart_hill_climbing(
     initial_state: State | None = None,
     *,
     max_restarts: int,
-    max_iterations_per_restart: int = 1_000,
     rng: random.Random | None = None,
 ) -> HillClimbingResult:
     _validate_maximum("max_restarts", max_restarts)
-    _validate_maximum("max_iterations_per_restart", max_iterations_per_restart)
     generator = rng or random.Random()
     first_state = _prepare_initial_state(problem, initial_state, generator)
 
@@ -179,9 +175,7 @@ def random_restart_hill_climbing(
             if run_index == 0
             else random_initial_state(problem, generator)
         )
-        run = _steepest_run(
-            problem, run_state, max_iterations_per_restart, generator
-        )
+        run = _steepest_run(problem, run_state, None, generator)
         runs.append(run)
         run_value = objective(problem, run.final_state)
 

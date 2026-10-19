@@ -46,8 +46,8 @@ def get_algorithm_parameters(algorithm: str) -> tuple[str, ...]:
     configurations = {
         "steepest": (),
         "stochastic": ("max_iterations",),
-        "sideways": ("max_iterations", "max_sideways_moves"),
-        "random_restart": ("max_iterations_per_restart", "max_restarts"),
+        "sideways": ("max_sideways_moves",),
+        "random_restart": ("max_restarts",),
         "sa": (
             "max_iterations", "initial_temperature", "min_temperature", "cooling_rate"
         ),
@@ -60,7 +60,6 @@ def get_parameter_label(name: str) -> str:
     labels = {
         "max_iterations": "Maks. iterasi",
         "max_sideways_moves": "Maks. sideways",
-        "max_iterations_per_restart": "Maks. iterasi/restart",
         "max_restarts": "Maks. restart",
         "initial_temperature": "Suhu awal",
         "min_temperature": "Suhu minimum",
@@ -78,7 +77,6 @@ def get_parameter_defaults() -> dict[str, str]:
     return {
         "max_iterations": "100",
         "max_sideways_moves": "20",
-        "max_iterations_per_restart": "100",
         "max_restarts": "5",
         "initial_temperature": "10",
         "min_temperature": "0.01",
@@ -182,7 +180,7 @@ def run_algorithm(problem: Problem, algorithm: str, parameters: dict, seed: int)
 class TruckSearchApp(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
-        self.title("Mejiro Express · Local Search")
+        self.title("Thoughts On Kecerdasan - Local Search")
         self.geometry("1320x820")
         self.minsize(1040, 660)
         self.problem: Problem | None = None
@@ -208,9 +206,7 @@ class TruckSearchApp(tk.Tk):
             key: tk.StringVar(value=value)
             for key, value in get_parameter_defaults().items()
         }
-        self.status_var = tk.StringVar(
-            value="Siap. Isi data atau gunakan contoh, lalu jalankan algoritma."
-        )
+        self.status_var = tk.StringVar()
 
         self._build_interface()
         self._add_examples()
