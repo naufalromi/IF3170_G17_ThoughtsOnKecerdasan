@@ -64,7 +64,8 @@ def draw_state(figure: Figure, problem: Problem, state: State, title: str) -> No
     ax.set(xlim=(0, truck.width), ylim=(0, truck.length), zlim=(0, truck.height),
            xlabel="X / lebar", ylabel="Y / panjang", zlabel="Z / tinggi")
     ax.set_box_aspect((truck.width, truck.length, truck.height))
-    ax.set_title(f"{title} · value {objective(problem, state):g}")
+    score_label = "value" if problem.objective_mode == "value" else "skor ETA"
+    ax.set_title(f"{title} · {score_label} {objective(problem, state):g}")
     figure.text(
         0.02, 0.02,
         "Di luar truk: " + (", ".join(outside) if outside else "tidak ada"),
@@ -73,7 +74,7 @@ def draw_state(figure: Figure, problem: Problem, state: State, title: str) -> No
     figure.tight_layout(rect=(0, 0.04, 1, 1))
 
 
-def draw_history(figure: Figure, algorithm: str, result) -> None:
+def draw_history(figure: Figure, problem: Problem, algorithm: str, result) -> None:
     figure.clear()
     if hasattr(result, "max_fitness_history"):
         ax = figure.add_subplot(111)
@@ -95,6 +96,7 @@ def draw_history(figure: Figure, algorithm: str, result) -> None:
         if getattr(result, "variant", "") == "random_restart":
             for boundary in result.restart_boundaries[1:]:
                 ax.axvline(boundary, color="#d97706", linestyle="--", linewidth=1)
-    ax.set(xlabel="Iterasi", ylabel="Value", title="Perkembangan objective")
+    score_label = "Value" if problem.objective_mode == "value" else "Skor ETA"
+    ax.set(xlabel="Iterasi", ylabel=score_label, title="Perkembangan objective")
     ax.grid(alpha=0.3)
     figure.tight_layout()

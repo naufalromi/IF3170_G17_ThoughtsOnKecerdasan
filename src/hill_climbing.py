@@ -11,6 +11,7 @@ from src.core import (
     generate_valid_neighbors,
     is_valid,
     objective,
+    objective_upper_bound,
     random_initial_state,
 )
 from src.models import Problem, State
@@ -167,7 +168,7 @@ def random_restart_hill_climbing(
     runs: list[_RunResult] = []
     best_state: State | None = None
     best_value = float("-inf")
-    optimum_upper_bound = sum(package.value for package in problem.packages.values())
+    optimum_upper_bound = objective_upper_bound(problem)
 
     for run_index in range(max_restarts + 1):
         run_state = (

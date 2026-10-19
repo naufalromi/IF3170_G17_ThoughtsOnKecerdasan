@@ -21,6 +21,11 @@ from src.output import result_summary, save_result, state_details
 from src.simmulated_annealing import simulated_annealing
 from src.visualization import draw_history, draw_state
 
+objective_option = {
+    "Total value": "value",
+    "Value + prioritas ETA": "eta_priority",
+}
+
 
 def get_algorithm_names() -> tuple[str, ...]:
     return (
@@ -116,7 +121,9 @@ def boolean(value: object, label: str) -> bool:
     raise ValueError(f"{label} harus bernilai true atau false.")
 
 
-def build_problem(truck_data: dict, package_rows: list[dict]) -> Problem:
+def build_problem(
+    truck_data: dict, package_rows: list[dict], objective_mode: str = "value"
+) -> Problem:
     truck = Truck(
         integer(truck_data["width"], "Lebar truk", 1),
         integer(truck_data["length"], "Panjang truk", 1),
@@ -143,7 +150,7 @@ def build_problem(truck_data: dict, package_rows: list[dict]) -> Problem:
             is_fragile=boolean(row["is_fragile"], f"Fragile {package_id}"),
             eta=integer(row["eta"], f"ETA {package_id}"),
         )
-    return Problem(truck=truck, packages=packages)
+    return Problem(truck=truck, packages=packages, objective_mode=objective_mode)
 
 
 def parse_parameters(algorithm: str, values: dict[str, str]) -> dict:
@@ -199,6 +206,7 @@ class TruckSearchApp(tk.Tk):
         }
         self.fragile_var = tk.BooleanVar(value=False)
         self.algorithm_var = tk.StringVar(value=get_algorithm_names()[0])
+        self.objective_var = tk.StringVar(value="Total value")
         self.seed_var = tk.StringVar(value="42")
         self.parameter_vars = {
             key: tk.StringVar(value=value)
@@ -301,16 +309,21 @@ class TruckSearchApp(tk.Tk):
         algorithm_box.bind(
             "<<ComboboxSelected>>", lambda _event: self._update_parameters()
         )
-        ttk.Label(settings, text="Seed").grid(row=1, column=0, sticky="w", pady=5)
+        ttk.Label(settings, text="Objective").grid(row=1, column=0, sticky="w", pady=5)
+        ttk.Combobox(
+            settings, textvariable=self.objective_var,
+            values=tuple(objective_option), state="readonly", width=35,
+        ).grid(row=1, column=1, columnspan=3, sticky="ew", padx=5)
+        ttk.Label(settings, text="Seed").grid(row=2, column=0, sticky="w", pady=5)
         ttk.Entry(settings, textvariable=self.seed_var, width=13).grid(
-            row=1, column=1, sticky="w", padx=5
+            row=2, column=1, sticky="w", padx=5
         )
         self.parameter_frame = ttk.Frame(settings)
-        self.parameter_frame.grid(row=2, column=0, columnspan=4, sticky="ew", pady=5)
+        self.parameter_frame.grid(row=3, column=0, columnspan=4, sticky="ew", pady=5)
         self.run_button = ttk.Button(
             settings, text="Jalankan", command=self._start_run
         )
-        self.run_button.grid(row=3, column=0, columnspan=4, sticky="ew", pady=5)
+        self.run_button.grid(row=4, column=0, columnspan=4, sticky="ew", pady=5)
         settings.columnconfigure(1, weight=1)
 
         result_tabs = ttk.Notebook(results)
@@ -440,12 +453,18 @@ class TruckSearchApp(tk.Tk):
             return
         try:
             data = json.loads(Path(path).read_text(encoding="utf-8"))
-            problem = build_problem(data["truck"], data["packages"])
+            problem = build_problem(
+                data["truck"], data["packages"], data.get("objective_mode", "value")
+            )
         except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
             messagebox.showerror("Gagal memuat input", str(exc))
             return
         for key, var in self.truck_vars.items():
             var.set(str(getattr(problem.truck, key)))
+        self.objective_var.set(
+            next(label for label, mode in objective_option.items()
+                 if mode == problem.objective_mode)
+        )
         for item_id in self.package_table.get_children():
             self.package_table.delete(item_id)
         for package in problem.packages.values():
@@ -473,6 +492,7 @@ class TruckSearchApp(tk.Tk):
             problem = build_problem(
                 {key: var.get() for key, var in self.truck_vars.items()},
                 self._package_rows(),
+                objective_option[self.objective_var.get()],
             )
             algorithm = self.algorithm_var.get()
             parameters = parse_parameters(
@@ -512,7 +532,7 @@ class TruckSearchApp(tk.Tk):
         self.active_seed = seed
         draw_state(self.figures["State awal"], problem, result.initial_state, "State awal")
         draw_state(self.figures["State akhir"], problem, result.final_state, "State akhir")
-        draw_history(self.figures["Grafik"], algorithm, result)
+        draw_history(self.figures["Grafik"], problem, algorithm, result)
         for canvas in self.canvases.values():
             canvas.draw_idle()
         self.summary_text.configure(state="normal")

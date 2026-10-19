@@ -48,13 +48,18 @@ def state_details(problem: Problem, result) -> str:
 
 
 def result_summary(problem: Problem, algorithm: str, seed: int, result) -> str:
-    initial_value = objective(problem, result.initial_state)
-    final_value = objective(problem, result.final_state)
+    initial_score = objective(problem, result.initial_state)
+    final_score = objective(problem, result.final_state)
+    objective_name = (
+        "Total value" if problem.objective_mode == "value"
+        else "Value + prioritas ETA"
+    )
     loaded = sum(p.position is not None for p in result.final_state.placements.values())
     lines = [
         f"Algoritma: {algorithm}",
         f"Seed: {seed}",
-        f"Value awal → akhir: {initial_value:g} → {final_value:g}",
+        f"Objective: {objective_name}",
+        f"Skor objective awal → akhir: {initial_score:g} → {final_score:g}",
         f"Paket di truk: {loaded}/{len(problem.packages)}",
         f"Berat akhir: {total_weight(problem, result.final_state):g}/{problem.truck.max_capacity:g}",
         f"Iterasi: {result.iterations}",
@@ -81,12 +86,14 @@ def result_payload(problem: Problem, algorithm: str, seed: int, result) -> dict:
     payload = {
         "algorithm": algorithm,
         "seed": seed,
+        "objective_mode": problem.objective_mode,
         "truck": vars(problem.truck),
         "packages": [vars(package) for package in problem.packages.values()],
         "summary": result_summary(problem, algorithm, seed, result),
         "initial_state": state_rows(problem, result.initial_state),
         "final_state": state_rows(problem, result.final_state),
         "final_value": result.final_value,
+        "initial_score": objective(problem, result.initial_state),
         "iterations": result.iterations,
         "duration_seconds": result.duration_seconds,
     }

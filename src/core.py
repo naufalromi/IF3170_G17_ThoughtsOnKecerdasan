@@ -29,9 +29,22 @@ def oriented_dimensions(
     raise ValueError(f"Unknown orientation: {orientation}")
 
 
+def package_objective_value(problem: Problem, package: Package) -> float:
+    if problem.objective_mode == "eta_priority":
+        return package.value * (1 + 1 / (1 + package.eta))
+    return package.value
+
+
+def objective_upper_bound(problem: Problem) -> float:
+    return sum(
+        package_objective_value(problem, package)
+        for package in problem.packages.values()
+    )
+
+
 def objective(problem: Problem, state: State) -> float:
     return sum(
-        problem.packages[placement.package_id].value
+        package_objective_value(problem, problem.packages[placement.package_id])
         for placement in state.placements.values()
         if placement.position is not None
     )

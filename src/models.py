@@ -92,8 +92,11 @@ class State:
 class Problem:
     truck: Truck
     packages: dict[str, Package]
+    objective_mode: str = "value"
 
     def __post_init__(self) -> None:
+        if self.objective_mode not in {"value", "eta_priority"}:
+            raise ValueError("Unknown objective mode")
         for package_id, package in self.packages.items():
             if package_id != package.id:
                 raise ValueError(
