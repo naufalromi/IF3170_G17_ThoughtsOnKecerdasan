@@ -73,10 +73,7 @@ def result_summary(problem: Problem, algorithm: str, seed: int, result) -> str:
     elif hasattr(result, "acceptance_probabilites"):
         lines.append(f"Stuck: {result.stuck_count}")
     elif hasattr(result, "max_fitness_history"):
-        lines.extend((
-            f"Populasi: {result.population_size}",
-            f"Crossover tidak valid: {result.invalid_crossovers}/{result.crossover_attempts}",
-        ))
+        lines.append(f"Populasi: {result.population_size}")
     return "\n".join(lines)
 
 

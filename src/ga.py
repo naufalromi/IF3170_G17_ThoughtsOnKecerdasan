@@ -10,8 +10,6 @@ from src.models import Problem, State
 
 @dataclass(frozen=True)
 class GeneticAlgorithmResult:
-    initial_population: tuple[State, ...]
-    final_population: tuple[State, ...]
     initial_state: State
     final_state: State
     final_value: float
@@ -19,10 +17,7 @@ class GeneticAlgorithmResult:
     mean_fitness_history: tuple[float, ...]
     population_size: int
     iterations: int
-    mutation_rate: float
     duration_seconds: float
-    crossover_attempts: int
-    invalid_crossovers: int
 
 
 def genetic_algorithm(
@@ -51,26 +46,20 @@ def genetic_algorithm(
     started_at = perf_counter()
     package_ids = tuple(sorted(problem.packages))
     population = [random_initial_state(problem, generator) for _ in range(population_size)]
-    initial_population = tuple(deepcopy(population))
     fitness = [objective(problem, state) for state in population]
     initial_state = deepcopy(population[max(range(population_size), key=fitness.__getitem__)])
     maxima = [max(fitness)]
     means = [sum(value / population_size for value in fitness)]
-    crossover_attempts = 0
-    invalid_crossovers = 0
-
     for _ in range(max_iterations):
         highest = max(fitness)
         weights = [value / highest for value in fitness] if highest > 0 else None
-        new_population = []
-        for _ in range(population_size):
+        highest_index = max(range(population_size), key=fitness.__getitem__)
+        new_population = [deepcopy(population[highest_index])]
+        for _ in range(population_size - 1):
             first, second = generator.choices(population, weights=weights, k=2)
             child = _crossover(first, second, package_ids, generator)
-            if len(package_ids) >= 2:
-                crossover_attempts += 1
-                if not is_valid(problem, child):
-                    invalid_crossovers += 1
-                    child = deepcopy(first)
+            if len(package_ids) >= 2 and not is_valid(problem, child):
+                child = deepcopy(first)
 
             if generator.random() < mutation_rate:
                 mutated = generate_valid_neighbor(problem, child, generator)
@@ -85,8 +74,6 @@ def genetic_algorithm(
 
     best_index = max(range(population_size), key=fitness.__getitem__)
     return GeneticAlgorithmResult(
-        initial_population=initial_population,
-        final_population=tuple(deepcopy(population)),
         initial_state=initial_state,
         final_state=deepcopy(population[best_index]),
         final_value=fitness[best_index],
@@ -94,10 +81,7 @@ def genetic_algorithm(
         mean_fitness_history=tuple(means),
         population_size=population_size,
         iterations=max_iterations,
-        mutation_rate=mutation_rate,
         duration_seconds=perf_counter() - started_at,
-        crossover_attempts=crossover_attempts,
-        invalid_crossovers=invalid_crossovers,
     )
 
 
