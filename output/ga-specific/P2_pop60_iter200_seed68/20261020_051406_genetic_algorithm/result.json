@@ -1,0 +1,1273 @@
+{
+  "algorithm": "Genetic Algorithm",
+  "seed": 68,
+  "objective_mode": "value",
+  "truck": {
+    "width": 6,
+    "length": 8,
+    "height": 4,
+    "max_capacity": 100.0
+  },
+  "packages": [
+    {
+      "id": "P01",
+      "width": 3,
+      "length": 3,
+      "height": 2,
+      "value": 90.0,
+      "weight": 12.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P02",
+      "width": 2,
+      "length": 4,
+      "height": 2,
+      "value": 85.0,
+      "weight": 10.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "P03",
+      "width": 2,
+      "length": 2,
+      "height": 2,
+      "value": 70.0,
+      "weight": 8.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "P04",
+      "width": 3,
+      "length": 2,
+      "height": 1,
+      "value": 60.0,
+      "weight": 5.0,
+      "is_fragile": true,
+      "eta": 2
+    },
+    {
+      "id": "P05",
+      "width": 4,
+      "length": 2,
+      "height": 2,
+      "value": 100.0,
+      "weight": 14.0,
+      "is_fragile": false,
+      "eta": 4
+    },
+    {
+      "id": "P06",
+      "width": 2,
+      "length": 3,
+      "height": 2,
+      "value": 75.0,
+      "weight": 9.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P07",
+      "width": 1,
+      "length": 2,
+      "height": 2,
+      "value": 45.0,
+      "weight": 4.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "P08",
+      "width": 3,
+      "length": 3,
+      "height": 1,
+      "value": 65.0,
+      "weight": 7.0,
+      "is_fragile": true,
+      "eta": 3
+    },
+    {
+      "id": "P09",
+      "width": 2,
+      "length": 2,
+      "height": 3,
+      "value": 80.0,
+      "weight": 11.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P10",
+      "width": 4,
+      "length": 3,
+      "height": 2,
+      "value": 120.0,
+      "weight": 18.0,
+      "is_fragile": false,
+      "eta": 5
+    },
+    {
+      "id": "P11",
+      "width": 1,
+      "length": 3,
+      "height": 2,
+      "value": 50.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "P12",
+      "width": 2,
+      "length": 2,
+      "height": 1,
+      "value": 40.0,
+      "weight": 3.0,
+      "is_fragile": true,
+      "eta": 2
+    },
+    {
+      "id": "P13",
+      "width": 3,
+      "length": 2,
+      "height": 2,
+      "value": 95.0,
+      "weight": 13.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "P14",
+      "width": 2,
+      "length": 4,
+      "height": 1,
+      "value": 55.0,
+      "weight": 7.0,
+      "is_fragile": true,
+      "eta": 4
+    },
+    {
+      "id": "P15",
+      "width": 3,
+      "length": 3,
+      "height": 3,
+      "value": 130.0,
+      "weight": 20.0,
+      "is_fragile": false,
+      "eta": 5
+    },
+    {
+      "id": "P16",
+      "width": 1,
+      "length": 1,
+      "height": 2,
+      "value": 30.0,
+      "weight": 2.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "P17",
+      "width": 4,
+      "length": 2,
+      "height": 1,
+      "value": 58.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P18",
+      "width": 2,
+      "length": 3,
+      "height": 3,
+      "value": 105.0,
+      "weight": 15.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "P19",
+      "width": 1,
+      "length": 2,
+      "height": 3,
+      "value": 48.0,
+      "weight": 5.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P20",
+      "width": 2,
+      "length": 2,
+      "height": 2,
+      "value": 68.0,
+      "weight": 8.0,
+      "is_fragile": true,
+      "eta": 1
+    }
+  ],
+  "summary": "Algoritma: Genetic Algorithm\nSeed: 68\nObjective: Total value\nSkor objective awal → akhir: 451 → 879\nPaket di truk: 14/20\nBerat akhir: 100/100\nIterasi: 200\nDurasi: 9.3520 detik\nPopulasi: 60",
+  "initial_state": [
+    {
+      "id": "P01",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        3,
+        2
+      ],
+      "value": 90.0,
+      "weight": 12.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P02",
+      "position": [
+        0,
+        4,
+        0
+      ],
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        4,
+        2
+      ],
+      "value": 85.0,
+      "weight": 10.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "P03",
+      "position": [
+        4,
+        6,
+        0
+      ],
+      "orientation": "YXZ",
+      "dimensions": [
+        2,
+        2,
+        2
+      ],
+      "value": 70.0,
+      "weight": 8.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "P04",
+      "position": [
+        3,
+        2,
+        0
+      ],
+      "orientation": "YXZ",
+      "dimensions": [
+        2,
+        3,
+        1
+      ],
+      "value": 60.0,
+      "weight": 5.0,
+      "is_fragile": true,
+      "eta": 2
+    },
+    {
+      "id": "P05",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        4,
+        2,
+        2
+      ],
+      "value": 100.0,
+      "weight": 14.0,
+      "is_fragile": false,
+      "eta": 4
+    },
+    {
+      "id": "P06",
+      "position": [
+        0,
+        2,
+        0
+      ],
+      "orientation": "YXZ",
+      "dimensions": [
+        3,
+        2,
+        2
+      ],
+      "value": 75.0,
+      "weight": 9.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P07",
+      "position": [
+        2,
+        6,
+        0
+      ],
+      "orientation": "YZX",
+      "dimensions": [
+        2,
+        2,
+        1
+      ],
+      "value": 45.0,
+      "weight": 4.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "P08",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        3,
+        1
+      ],
+      "value": 65.0,
+      "weight": 7.0,
+      "is_fragile": true,
+      "eta": 3
+    },
+    {
+      "id": "P09",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        2,
+        3
+      ],
+      "value": 80.0,
+      "weight": 11.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P10",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        4,
+        3,
+        2
+      ],
+      "value": 120.0,
+      "weight": 18.0,
+      "is_fragile": false,
+      "eta": 5
+    },
+    {
+      "id": "P11",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        1,
+        3,
+        2
+      ],
+      "value": 50.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "P12",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        2,
+        1
+      ],
+      "value": 40.0,
+      "weight": 3.0,
+      "is_fragile": true,
+      "eta": 2
+    },
+    {
+      "id": "P13",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        2,
+        2
+      ],
+      "value": 95.0,
+      "weight": 13.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "P14",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        4,
+        1
+      ],
+      "value": 55.0,
+      "weight": 7.0,
+      "is_fragile": true,
+      "eta": 4
+    },
+    {
+      "id": "P15",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        3,
+        3
+      ],
+      "value": 130.0,
+      "weight": 20.0,
+      "is_fragile": false,
+      "eta": 5
+    },
+    {
+      "id": "P16",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        1,
+        1,
+        2
+      ],
+      "value": 30.0,
+      "weight": 2.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "P17",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        4,
+        2,
+        1
+      ],
+      "value": 58.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P18",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        3,
+        3
+      ],
+      "value": 105.0,
+      "weight": 15.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "P19",
+      "position": [
+        5,
+        3,
+        0
+      ],
+      "orientation": "XZY",
+      "dimensions": [
+        1,
+        3,
+        2
+      ],
+      "value": 48.0,
+      "weight": 5.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P20",
+      "position": [
+        1,
+        0,
+        0
+      ],
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        2,
+        2
+      ],
+      "value": 68.0,
+      "weight": 8.0,
+      "is_fragile": true,
+      "eta": 1
+    }
+  ],
+  "final_state": [
+    {
+      "id": "P01",
+      "position": [
+        2,
+        4,
+        2
+      ],
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        3,
+        2
+      ],
+      "value": 90.0,
+      "weight": 12.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P02",
+      "position": [
+        0,
+        4,
+        0
+      ],
+      "orientation": "ZYX",
+      "dimensions": [
+        2,
+        4,
+        2
+      ],
+      "value": 85.0,
+      "weight": 10.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "P03",
+      "position": [
+        3,
+        0,
+        0
+      ],
+      "orientation": "XZY",
+      "dimensions": [
+        2,
+        2,
+        2
+      ],
+      "value": 70.0,
+      "weight": 8.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "P04",
+      "position": [
+        1,
+        3,
+        2
+      ],
+      "orientation": "XZY",
+      "dimensions": [
+        3,
+        1,
+        2
+      ],
+      "value": 60.0,
+      "weight": 5.0,
+      "is_fragile": true,
+      "eta": 2
+    },
+    {
+      "id": "P05",
+      "position": null,
+      "orientation": "XZY",
+      "dimensions": [
+        4,
+        2,
+        2
+      ],
+      "value": 100.0,
+      "weight": 14.0,
+      "is_fragile": false,
+      "eta": 4
+    },
+    {
+      "id": "P06",
+      "position": [
+        0,
+        2,
+        0
+      ],
+      "orientation": "YZX",
+      "dimensions": [
+        3,
+        2,
+        2
+      ],
+      "value": 75.0,
+      "weight": 9.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P07",
+      "position": [
+        3,
+        3,
+        0
+      ],
+      "orientation": "YZX",
+      "dimensions": [
+        2,
+        2,
+        1
+      ],
+      "value": 45.0,
+      "weight": 4.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "P08",
+      "position": [
+        0,
+        1,
+        0
+      ],
+      "orientation": "XZY",
+      "dimensions": [
+        3,
+        1,
+        3
+      ],
+      "value": 65.0,
+      "weight": 7.0,
+      "is_fragile": true,
+      "eta": 3
+    },
+    {
+      "id": "P09",
+      "position": [
+        3,
+        0,
+        2
+      ],
+      "orientation": "YZX",
+      "dimensions": [
+        2,
+        3,
+        2
+      ],
+      "value": 80.0,
+      "weight": 11.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P10",
+      "position": null,
+      "orientation": "XZY",
+      "dimensions": [
+        4,
+        2,
+        3
+      ],
+      "value": 120.0,
+      "weight": 18.0,
+      "is_fragile": false,
+      "eta": 5
+    },
+    {
+      "id": "P11",
+      "position": [
+        0,
+        2,
+        2
+      ],
+      "orientation": "YXZ",
+      "dimensions": [
+        3,
+        1,
+        2
+      ],
+      "value": 50.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "P12",
+      "position": null,
+      "orientation": "ZYX",
+      "dimensions": [
+        1,
+        2,
+        2
+      ],
+      "value": 40.0,
+      "weight": 3.0,
+      "is_fragile": true,
+      "eta": 2
+    },
+    {
+      "id": "P13",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        2,
+        2
+      ],
+      "value": 95.0,
+      "weight": 13.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "P14",
+      "position": [
+        1,
+        0,
+        0
+      ],
+      "orientation": "XZY",
+      "dimensions": [
+        2,
+        1,
+        4
+      ],
+      "value": 55.0,
+      "weight": 7.0,
+      "is_fragile": true,
+      "eta": 4
+    },
+    {
+      "id": "P15",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        3,
+        3
+      ],
+      "value": 130.0,
+      "weight": 20.0,
+      "is_fragile": false,
+      "eta": 5
+    },
+    {
+      "id": "P16",
+      "position": [
+        1,
+        7,
+        2
+      ],
+      "orientation": "YXZ",
+      "dimensions": [
+        1,
+        1,
+        2
+      ],
+      "value": 30.0,
+      "weight": 2.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "P17",
+      "position": [
+        5,
+        3,
+        0
+      ],
+      "orientation": "ZYX",
+      "dimensions": [
+        1,
+        2,
+        4
+      ],
+      "value": 58.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P18",
+      "position": null,
+      "orientation": "ZYX",
+      "dimensions": [
+        3,
+        3,
+        2
+      ],
+      "value": 105.0,
+      "weight": 15.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "P19",
+      "position": [
+        2,
+        5,
+        0
+      ],
+      "orientation": "ZXY",
+      "dimensions": [
+        3,
+        1,
+        2
+      ],
+      "value": 48.0,
+      "weight": 5.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "P20",
+      "position": [
+        0,
+        4,
+        2
+      ],
+      "orientation": "YXZ",
+      "dimensions": [
+        2,
+        2,
+        2
+      ],
+      "value": 68.0,
+      "weight": 8.0,
+      "is_fragile": true,
+      "eta": 1
+    }
+  ],
+  "final_value": 879.0,
+  "initial_score": 451.0,
+  "iterations": 200,
+  "duration_seconds": 9.352037374999782,
+  "max_fitness_history": [
+    451.0,
+    455.0,
+    455.0,
+    509.0,
+    571.0,
+    599.0,
+    599.0,
+    599.0,
+    599.0,
+    629.0,
+    629.0,
+    629.0,
+    629.0,
+    629.0,
+    639.0,
+    639.0,
+    639.0,
+    639.0,
+    674.0,
+    674.0,
+    696.0,
+    696.0,
+    724.0,
+    724.0,
+    724.0,
+    724.0,
+    724.0,
+    724.0,
+    724.0,
+    724.0,
+    724.0,
+    724.0,
+    724.0,
+    724.0,
+    724.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    753.0,
+    776.0,
+    776.0,
+    776.0,
+    776.0,
+    813.0,
+    813.0,
+    813.0,
+    813.0,
+    813.0,
+    813.0,
+    813.0,
+    813.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    858.0,
+    866.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    868.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    876.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0,
+    879.0
+  ],
+  "mean_fitness_history": [
+    309.6333333333333,
+    327.9,
+    334.3833333333333,
+    359.5833333333333,
+    377.2,
+    376.55,
+    367.98333333333335,
+    354.8333333333333,
+    353.81666666666666,
+    389.93333333333334,
+    392.3333333333333,
+    430.05,
+    453.56666666666666,
+    473.85,
+    477.90000000000003,
+    500.2166666666667,
+    494.98333333333335,
+    492.2,
+    517.15,
+    518.6,
+    519.7333333333333,
+    513.05,
+    519.1333333333333,
+    532.5833333333334,
+    534.3,
+    546.4833333333333,
+    552.2666666666667,
+    568.1833333333333,
+    573.3166666666666,
+    564.8666666666667,
+    556.2833333333333,
+    551.8,
+    560.6,
+    562.2333333333333,
+    567.5166666666667,
+    566.1,
+    551.2,
+    575.9833333333333,
+    596.8333333333334,
+    603.2166666666667,
+    582.1,
+    589.6,
+    591.9333333333334,
+    591.3166666666667,
+    589.3833333333333,
+    603.0833333333334,
+    612.65,
+    632.5333333333333,
+    642.1833333333334,
+    657.1,
+    666.35,
+    671.9833333333333,
+    672.5,
+    667.7333333333333,
+    691.45,
+    700.7,
+    690.6666666666667,
+    689.75,
+    680.95,
+    692.1,
+    692.1,
+    693.4333333333334,
+    679.7666666666667,
+    696.0166666666667,
+    693.35,
+    687.9166666666666,
+    695.3833333333333,
+    699.5500000000001,
+    709.3666666666667,
+    702.0,
+    711.1666666666667,
+    710.75,
+    711.0666666666667,
+    704.65,
+    706.1,
+    704.6166666666667,
+    720.7333333333333,
+    711.15,
+    717.4166666666667,
+    724.9833333333333,
+    732.6,
+    720.3833333333333,
+    714.1,
+    698.2333333333333,
+    696.8833333333333,
+    706.95,
+    712.8666666666667,
+    716.7,
+    746.5333333333333,
+    761.6333333333333,
+    761.4,
+    782.3333333333334,
+    797.7,
+    797.7833333333333,
+    800.0,
+    801.1333333333333,
+    789.2166666666667,
+    778.6,
+    759.9,
+    774.3166666666667,
+    793.6833333333334,
+    795.3166666666667,
+    780.5833333333334,
+    777.35,
+    774.4,
+    758.45,
+    771.2666666666667,
+    749.9,
+    768.1333333333333,
+    762.1666666666666,
+    762.4666666666667,
+    778.1,
+    785.0,
+    778.3166666666666,
+    766.5833333333334,
+    769.15,
+    771.65,
+    775.6666666666666,
+    802.8,
+    815.6166666666667,
+    804.3333333333334,
+    800.3333333333334,
+    792.15,
+    785.7166666666667,
+    782.4333333333333,
+    779.8666666666667,
+    785.8833333333333,
+    783.45,
+    789.2666666666667,
+    784.6166666666667,
+    796.1833333333334,
+    802.5333333333333,
+    805.1,
+    787.9333333333334,
+    774.0,
+    769.5333333333333,
+    777.4333333333334,
+    758.7333333333333,
+    760.4,
+    762.5,
+    760.65,
+    757.55,
+    750.7333333333333,
+    756.25,
+    756.2166666666667,
+    752.2166666666667,
+    766.3333333333334,
+    773.8833333333333,
+    782.9,
+    774.9,
+    780.9666666666667,
+    766.0666666666667,
+    762.5,
+    750.1166666666667,
+    738.0833333333334,
+    748.9833333333333,
+    765.2166666666667,
+    757.5166666666667,
+    755.8833333333333,
+    752.3333333333334,
+    756.1833333333334,
+    769.6666666666666,
+    773.05,
+    768.1666666666666,
+    754.6,
+    750.8333333333334,
+    731.3,
+    724.8,
+    732.5166666666667,
+    731.2833333333333,
+    736.0666666666667,
+    730.9166666666666,
+    734.1666666666666,
+    749.8833333333333,
+    743.6333333333333,
+    735.5333333333333,
+    732.8666666666667,
+    719.25,
+    711.2333333333333,
+    702.65,
+    690.6666666666667,
+    685.35,
+    689.5,
+    678.85,
+    699.1833333333334,
+    707.2166666666667,
+    720.2166666666667,
+    711.75,
+    697.7666666666667,
+    694.3000000000001,
+    700.8166666666667,
+    685.4166666666666,
+    677.7333333333333,
+    673.25,
+    676.2833333333333,
+    690.6166666666667,
+    691.6166666666667,
+    693.3,
+    710.0333333333333,
+    702.7,
+    695.5333333333333
+  ],
+  "population_size": 60
+}
