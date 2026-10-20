@@ -1,0 +1,538 @@
+{
+  "algorithm": "Hill-Climbing with Sideways Move",
+  "seed": 42,
+  "objective_mode": "value",
+  "truck": {
+    "width": 5,
+    "length": 5,
+    "height": 3,
+    "max_capacity": 30.0
+  },
+  "packages": [
+    {
+      "id": "A",
+      "width": 2,
+      "length": 2,
+      "height": 1,
+      "value": 80.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "B",
+      "width": 2,
+      "length": 2,
+      "height": 1,
+      "value": 65.0,
+      "weight": 5.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "C",
+      "width": 2,
+      "length": 1,
+      "height": 1,
+      "value": 48.0,
+      "weight": 3.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "D",
+      "width": 1,
+      "length": 2,
+      "height": 1,
+      "value": 46.0,
+      "weight": 3.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "E",
+      "width": 1,
+      "length": 1,
+      "height": 2,
+      "value": 35.0,
+      "weight": 2.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "F",
+      "width": 2,
+      "length": 2,
+      "height": 1,
+      "value": 58.0,
+      "weight": 4.0,
+      "is_fragile": true,
+      "eta": 4
+    },
+    {
+      "id": "G",
+      "width": 3,
+      "length": 2,
+      "height": 1,
+      "value": 90.0,
+      "weight": 9.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "H",
+      "width": 1,
+      "length": 3,
+      "height": 2,
+      "value": 78.0,
+      "weight": 7.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "I",
+      "width": 2,
+      "length": 3,
+      "height": 1,
+      "value": 74.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "J",
+      "width": 1,
+      "length": 1,
+      "height": 2,
+      "value": 29.0,
+      "weight": 2.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "K",
+      "width": 3,
+      "length": 3,
+      "height": 1,
+      "value": 100.0,
+      "weight": 10.0,
+      "is_fragile": false,
+      "eta": 4
+    },
+    {
+      "id": "L",
+      "width": 2,
+      "length": 1,
+      "height": 2,
+      "value": 63.0,
+      "weight": 5.0,
+      "is_fragile": false,
+      "eta": 2
+    }
+  ],
+  "summary": "Algoritma: Hill-Climbing with Sideways Move\nSeed: 42\nObjective: Total value\nSkor objective awal → akhir: 109 → 353\nPaket di truk: 5/12\nBerat akhir: 30/30\nIterasi: 28\nDurasi: 1.9170 detik\nBerhenti karena: max_sideways_moves\nSideways move: 24",
+  "initial_state": [
+    {
+      "id": "A",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        2,
+        1
+      ],
+      "value": 80.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "B",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        2,
+        1
+      ],
+      "value": 65.0,
+      "weight": 5.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "C",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        1,
+        1
+      ],
+      "value": 48.0,
+      "weight": 3.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "D",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        1,
+        2,
+        1
+      ],
+      "value": 46.0,
+      "weight": 3.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "E",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "orientation": "YXZ",
+      "dimensions": [
+        1,
+        1,
+        2
+      ],
+      "value": 35.0,
+      "weight": 2.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "F",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        2,
+        1
+      ],
+      "value": 58.0,
+      "weight": 4.0,
+      "is_fragile": true,
+      "eta": 4
+    },
+    {
+      "id": "G",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        2,
+        1
+      ],
+      "value": 90.0,
+      "weight": 9.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "H",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        1,
+        3,
+        2
+      ],
+      "value": 78.0,
+      "weight": 7.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "I",
+      "position": [
+        1,
+        3,
+        0
+      ],
+      "orientation": "ZXY",
+      "dimensions": [
+        1,
+        2,
+        3
+      ],
+      "value": 74.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "J",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        1,
+        1,
+        2
+      ],
+      "value": 29.0,
+      "weight": 2.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "K",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        3,
+        1
+      ],
+      "value": 100.0,
+      "weight": 10.0,
+      "is_fragile": false,
+      "eta": 4
+    },
+    {
+      "id": "L",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        1,
+        2
+      ],
+      "value": 63.0,
+      "weight": 5.0,
+      "is_fragile": false,
+      "eta": 2
+    }
+  ],
+  "final_state": [
+    {
+      "id": "A",
+      "position": [
+        1,
+        2,
+        0
+      ],
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        2,
+        1
+      ],
+      "value": 80.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "B",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        2,
+        1
+      ],
+      "value": 65.0,
+      "weight": 5.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "C",
+      "position": [
+        0,
+        1,
+        0
+      ],
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        1,
+        1
+      ],
+      "value": 48.0,
+      "weight": 3.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "D",
+      "position": null,
+      "orientation": "ZYX",
+      "dimensions": [
+        1,
+        2,
+        1
+      ],
+      "value": 46.0,
+      "weight": 3.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "E",
+      "position": [
+        3,
+        0,
+        0
+      ],
+      "orientation": "ZXY",
+      "dimensions": [
+        2,
+        1,
+        1
+      ],
+      "value": 35.0,
+      "weight": 2.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "F",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        2,
+        1
+      ],
+      "value": 58.0,
+      "weight": 4.0,
+      "is_fragile": true,
+      "eta": 4
+    },
+    {
+      "id": "G",
+      "position": [
+        0,
+        2,
+        1
+      ],
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        2,
+        1
+      ],
+      "value": 90.0,
+      "weight": 9.0,
+      "is_fragile": false,
+      "eta": 2
+    },
+    {
+      "id": "H",
+      "position": null,
+      "orientation": "ZYX",
+      "dimensions": [
+        2,
+        3,
+        1
+      ],
+      "value": 78.0,
+      "weight": 7.0,
+      "is_fragile": false,
+      "eta": 1
+    },
+    {
+      "id": "I",
+      "position": null,
+      "orientation": "YXZ",
+      "dimensions": [
+        3,
+        2,
+        1
+      ],
+      "value": 74.0,
+      "weight": 6.0,
+      "is_fragile": false,
+      "eta": 3
+    },
+    {
+      "id": "J",
+      "position": null,
+      "orientation": "YXZ",
+      "dimensions": [
+        1,
+        1,
+        2
+      ],
+      "value": 29.0,
+      "weight": 2.0,
+      "is_fragile": true,
+      "eta": 1
+    },
+    {
+      "id": "K",
+      "position": [
+        1,
+        1,
+        2
+      ],
+      "orientation": "XYZ",
+      "dimensions": [
+        3,
+        3,
+        1
+      ],
+      "value": 100.0,
+      "weight": 10.0,
+      "is_fragile": false,
+      "eta": 4
+    },
+    {
+      "id": "L",
+      "position": null,
+      "orientation": "XYZ",
+      "dimensions": [
+        2,
+        1,
+        2
+      ],
+      "value": 63.0,
+      "weight": 5.0,
+      "is_fragile": false,
+      "eta": 2
+    }
+  ],
+  "final_value": 353.0,
+  "initial_score": 109.0,
+  "iterations": 28,
+  "duration_seconds": 1.917033646001073,
+  "objective_history": [
+    109.0,
+    209.0,
+    299.0,
+    347.0,
+    347.0,
+    347.0,
+    347.0,
+    347.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0,
+    353.0
+  ],
+  "sideways_moves": 24
+}
